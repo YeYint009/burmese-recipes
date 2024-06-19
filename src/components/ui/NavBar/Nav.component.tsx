@@ -1,24 +1,8 @@
-import React from 'react'
-import {
-  Menubar,
-  MenubarContent,
-  MenubarItem,
-  MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
-} from "@/components/ui/menubar"
-
-
 
 const NavComponent = () => {
   return (
-    <div className='w-full flex justify-end items-center'>
-      <Menubar>
-        <MenubarMenu>
-          <MenubarTrigger>File</MenubarTrigger>
-        </MenubarMenu>
-      </Menubar>
+    <div className='w-full flex justify-start items-center bg-slate-600'>
+      <h1 className='text-3xl font-bold text-white italic '>Burmese-recipe</h1>
     </div>
   )
 }
