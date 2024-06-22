@@ -1,4 +1,4 @@
-import Nav from "@/components/NavBar/Nav";
+import Nav from "@/components/navBar/Nav";
 import { Outlet } from "react-router";
 
 const AppLayout = () => {

@@ -1,4 +1,4 @@
-import NavComponent from "@/components/NavBar/Nav";
+import NavComponent from "@/components/navBar/Nav";
 import React from "react";
 
 const HomePage = () => {
