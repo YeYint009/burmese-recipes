@@ -1,5 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
-import { HomePage, MenuPage } from "@/pages";
+import {  MenuPage } from "@/pages";
 import { AppLayout } from "@/components/layouts";
 
 export const router = createBrowserRouter([
@@ -9,12 +9,8 @@ export const router = createBrowserRouter([
     errorElement: <div>error</div>,
     children: [
       {
-        element: <HomePage />,
-        index: true,
-      },
-      {
-        path: "/menu",
         element: <MenuPage />,
+        index: true,
       },
     ],
   },
