@@ -3,15 +3,17 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 const RecipeCard = ({ recipe }: {recipe:Recipe}) => {
   return (
-    <div className="">
+    <section>
+      <Card className="w-auto h-96 shadow-xl overflow-hidden">
       <CardHeader>
-        <img src="/public/ChickenPinsein.jpg" className="w-24 h-24" />
-        <CardTitle>{recipe.Name}</CardTitle>
         <CardContent>
-          <div className="mt-2 ">{recipe.CookingInstructions}</div>
+        <img src={`/public/${recipe.Name}.jpg`} className=" aspect-square w-[300px] mb-10" />
+        <CardTitle>{recipe.Name}</CardTitle>
+          <div className="mt-2">{recipe.CookingInstructions}</div>
         </CardContent>
       </CardHeader>
-    </div>
+      </Card>
+    </section>
   );
 };
 
