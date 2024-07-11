@@ -4,7 +4,8 @@ import RecipeCard from "@/components/Card/RecipeCard";
 const MenuPage = () => {
   const { recipes, state } = useFetchRecipes();
   return (
-    <div className="grid grid-cols-3 gap-3">
+    <div className="container">
+      <div className="grid grid-cols-3 gap-3">
       {state.status === "loading" ? (
         <h1>Loading...</h1>
       ) : state.status === "failed" ? (
@@ -14,6 +15,7 @@ const MenuPage = () => {
           <RecipeCard recipe={recipe} key={recipe.Guid} />
         ))
       )}
+    </div>
     </div>
   );
 };
