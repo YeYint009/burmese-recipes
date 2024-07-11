@@ -1,5 +1,5 @@
 import useFetchRecipes from "@/hooks/useFetchRecipes";
-import { PaginationProps, Recipe } from "../../types/recipe.types";
+import { Recipe } from "../../types/recipe.types";
 import RecipeCard from "@/components/Card/RecipeCard";
 import { useState } from "react";
 import {
