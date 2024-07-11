@@ -18,3 +18,11 @@ export interface RecipeState {
   status: "idle" | "loading" | "succeeded" | "failed";
   error: string | null;
 }
+
+export interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+  page: number;
+  event: React.MouseEvent<HTMLAnchorElement>;
+}
