@@ -1,4 +1,3 @@
-import React from "react";
 import { Recipe } from "../../types/recipe.types";
 import { createSlice } from "@reduxjs/toolkit";
 
