@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 
 const RecipeCard = ({ recipe }: {recipe:Recipe}) => {
   return (
-    <section className="mt-24">
+    <section>
       <Card className="w-auto h-96 shadow-xl overflow-hidden">
       <CardHeader>
         <CardContent>

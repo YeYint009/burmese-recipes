@@ -4,18 +4,20 @@ import RecipeCard from "@/components/Card/RecipeCard";
 const MenuPage = () => {
   const { recipes, state } = useFetchRecipes();
   return (
-    <div className="container">
-      <div className="grid grid-cols-3 gap-3">
-      {state.status === "loading" ? (
-        <h1>Loading...</h1>
-      ) : state.status === "failed" ? (
-        <h1>Error : {state.error}</h1>
-      ) : (
-        recipes.map((recipe: Recipe) => (
-          <RecipeCard recipe={recipe} key={recipe.Guid} />
-        ))
-      )}
-    </div>
+    <div className="mt-24">
+      <div className="container">
+        <div className="grid grid-cols-3 gap-3">
+          {state.status === "loading" ? (
+            <h1>Loading...</h1>
+          ) : state.status === "failed" ? (
+            <h1>Error : {state.error}</h1>
+          ) : (
+            recipes.map((recipe: Recipe) => (
+              <RecipeCard recipe={recipe} key={recipe.Guid} />
+            ))
+          )}
+        </div>
+      </div>
     </div>
   );
 };
