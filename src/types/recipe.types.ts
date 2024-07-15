@@ -22,9 +22,7 @@ export interface RecipeState {
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
-  page: number;
-  event: React.MouseEvent<HTMLAnchorElement>;
+  handlePageChange: (page:number) => void;
 }
 
 export interface RootState {
