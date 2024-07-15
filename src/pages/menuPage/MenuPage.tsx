@@ -1,7 +1,6 @@
-import useFetchRecipes from "@/hooks/useFetchRecipes";
-import { Recipe } from "../../types/recipe.types";
+import { Recipe, RootState } from "../../types/recipe.types";
 import RecipeCard from "@/components/Card/RecipeCard";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -10,19 +9,28 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { useDispatch, useSelector } from "react-redux";
+import { setRecipeData } from "@/redux/features/recipes.slice";
+import useFetchRecipes from "@/hooks/useFetchRecipes";
+import { AppDispatch } from "@/redux/store";
+
 const MenuPage = () => {
-  const { recipes, state } = useFetchRecipes();
+  const dispatch = useDispatch<AppDispatch>();
+  const {recipes,state} = useFetchRecipes();
+  const recipeData = useSelector(
+    (state: RootState) => state.recipes.recipeData
+  );
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
+  
+  const totalPages = Math.ceil(recipeData.length / itemsPerPage);
 
-  const totalPages = Math.ceil(recipes.length / itemsPerPage);
-
-  const currentItems = recipes.slice(
+  const currentItems = recipeData.slice(
     (currentPage - 1) * itemsPerPage,
     currentPage * itemsPerPage
   );
 
-  console.log(recipes.length);
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
@@ -31,8 +39,6 @@ const MenuPage = () => {
     event.preventDefault();
     if (currentPage > 1) {
       handlePageChange(currentPage - 1);
-    } else {
-      currentPage;
     }
   };
 
@@ -49,19 +55,19 @@ const MenuPage = () => {
       handlePageChange(page);
     };
 
+    useEffect(() => {
+      state.status === 'succeeded' ? dispatch(setRecipeData(recipes)) : null
+    },[state,recipes,dispatch])
+
   return (
     <div className="mt-24">
       <div className="container">
         <div className="grid grid-cols-3 gap-3">
-          {state.status === "loading" ? (
-            <h1>Loading...</h1>
-          ) : state.status === "failed" ? (
-            <h1>Error : {state.error}</h1>
-          ) : (
+          {
             currentItems.map((recipe: Recipe) => (
               <RecipeCard recipe={recipe} key={recipe.Guid} />
             ))
-          )}
+          }
         </div>
         <Pagination>
           <PaginationContent>

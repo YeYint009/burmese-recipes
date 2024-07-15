@@ -26,3 +26,10 @@ export interface PaginationProps {
   page: number;
   event: React.MouseEvent<HTMLAnchorElement>;
 }
+
+export interface RootState {
+  recipes : {
+    recipeData : Recipe[],
+    filterRecipe : Recipe[]
+  }
+}

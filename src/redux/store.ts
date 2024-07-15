@@ -1,9 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import recipesReducer from "./features/recipes.slice";
+import reducers from "./features/recipes.slice";
 
-const store = configureStore({ reducer: {
-  recipes : recipesReducer
-} });
+const { recipesReducer, filterRecipesReducer } = reducers;
+
+const store = configureStore({
+  reducer: {
+    recipes: recipesReducer,
+    filter: filterRecipesReducer,
+  },
+});
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
