@@ -1,5 +1,7 @@
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import Dropdown from "../dropdown/Dropdown";
+import { Search } from "lucide-react";
 
 const NavBar = () => {
   return (
@@ -8,21 +10,23 @@ const NavBar = () => {
         Burmese Recipe
       </div>
       <div className="flex items-center mr-10 w-72 gap-1">
-        <Input type="text" placeholder="Search" />
-        <Button className="">
+        <Dropdown />
+        <Input type="text" placeholder="Search" className="w-48" />
+        <Button size="icon">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            fill="none"
+            width="24"
+            height="24"
             viewBox="0 0 24 24"
-            stroke-width="2"
+            fill="none"
             stroke="currentColor"
-            className="w-4"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-search"
           >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"
-            />
+            <circle cx="11" cy="11" r="8" />
+            <path d="m21 21-4.3-4.3" />
           </svg>
         </Button>
       </div>

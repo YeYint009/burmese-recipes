@@ -6,25 +6,25 @@ const burmese_recipe_api =
 
 const useFetchRecipes = () => {
   const [recipes, setRecipes] = useState([]);
-  const [state, setState] = useState<RecipeState>({
+  const [dataState, setDataState] = useState<RecipeState>({
     status: "idle",
     error: null,
   });
 
   useEffect(() => {
     (async () => {
-      setState({ status: "loading", error: null });
+      setDataState({ status: "loading", error: null });
       try {
         const res = await fetch(burmese_recipe_api);
         const data = await res.json();
         setRecipes(data);
-        setState({ status: "succeeded", error: null });
+        setDataState({ status: "succeeded", error: null });
       } catch (error) {
-        setState({ status: "failed", error: "Failed to load" });
+        setDataState({ status: "failed", error: "Failed to load" });
       }
     })();
   }, []);
-  return { recipes, state };
+  return { recipes, dataState };
 };
 
 export default useFetchRecipes;

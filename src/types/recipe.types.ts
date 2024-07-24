@@ -6,7 +6,7 @@ export interface Recipe {
   UserType: string;
 }
 
-export interface Category {
+export interface filterCategory {
   selectedCategory: "001" | "002";
 }
 
@@ -22,12 +22,14 @@ export interface RecipeState {
 export interface PaginationProps {
   currentPage: number;
   totalPages: number;
-  handlePageChange: (page:number) => void;
+  handlePageChange: (page: number) => void;
 }
 
 export interface RootState {
-  recipes : {
-    recipeData : Recipe[],
-    filterRecipe : Recipe[]
-  }
+  filterRecipes: any;
+  recipes: {
+    recipeData: Recipe[];
+    filterRecipes: Recipe[];
+    selectedCategory: "001" | "002";
+  };
 }

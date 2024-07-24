@@ -1,28 +1,30 @@
-import { Recipe } from "../../types/recipe.types";
+import { filterCategory, Recipe } from "../../types/recipe.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState : { recipeData : Recipe[], filterRecipe : Recipe []} = {
-  recipeData : [],
-  filterRecipe : []
-}
-
+const initialState: { recipeData: Recipe[] } = {
+  recipeData: [],
+};
 
 export const recipesSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {
-      setRecipeData  : (state,action : PayloadAction<Recipe[]>) => {
+    setRecipeData: (state, action: PayloadAction<Recipe[]>) => {
       state.recipeData = action.payload;
-    }
+    },
   },
 });
 
+const filterRecipeInitialState: filterCategory = {
+  selectedCategory: "001",
+};
+
 export const filterRecipesSlice = createSlice({
   name: "filterRecipes",
-  initialState,
+  initialState: filterRecipeInitialState,
   reducers: {
-    setSelectedCategory: (state, action) => {
-      state.filterRecipe = action.payload;
+    setSelectedCategory: (state, action: PayloadAction<"001" | "002">) => {
+      state.selectedCategory = action.payload;
     },
   },
 });

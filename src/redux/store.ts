@@ -6,7 +6,7 @@ const { recipesReducer, filterRecipesReducer } = reducers;
 const store = configureStore({
   reducer: {
     recipes: recipesReducer,
-    filter: filterRecipesReducer,
+    filterRecipes: filterRecipesReducer,
   },
 });
 
