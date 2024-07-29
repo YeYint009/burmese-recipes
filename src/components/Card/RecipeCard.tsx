@@ -7,14 +7,14 @@ const RecipeCard = ({ recipe }: { recipe: Recipe }) => {
     <section>
       <Card className="w-[90%] h-[90%] mx-auto shadow-xl overflow-hidden border">
         <CardHeader>
-          <CardContent className="flex justify-center underline">
+          <CardContent className="flex flex-col justify-center underline">
             <div>
               <img
                 src={`/${recipe.Name}.jpg`}
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = imgNotFound;
                 }}
-                className=" object-cover w-full h-[200px] object-center rounded-md"
+                className=" object-cover w-full h-[200px] mb-2 object-center rounded-md"
               />
             </div>
             <CardTitle className="leading-7 whitespace-pre overflow-ellipsis overflow-hidden">

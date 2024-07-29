@@ -1,8 +1,18 @@
-import { filterCategory, Recipe } from "../../types/recipe.types";
+import { fetchRecipes } from "@/hooks/FetchRecipes";
+import { Recipe, RecipeState } from "../../types/recipe.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState: { recipeData: Recipe[] } = {
+const initialState: {
+  recipeData: Recipe[];
+  selectedCategory: string;
+  RecipeState: RecipeState;
+} = {
   recipeData: [],
+  selectedCategory: "001",
+  RecipeState: {
+    status: "idle",
+    error: null,
+  },
 };
 
 export const recipesSlice = createSlice({
@@ -12,28 +22,27 @@ export const recipesSlice = createSlice({
     setRecipeData: (state, action: PayloadAction<Recipe[]>) => {
       state.recipeData = action.payload;
     },
-  },
-});
-
-const filterRecipeInitialState: filterCategory = {
-  selectedCategory: "001",
-};
-
-export const filterRecipesSlice = createSlice({
-  name: "filterRecipes",
-  initialState: filterRecipeInitialState,
-  reducers: {
     setSelectedCategory: (state, action: PayloadAction<"001" | "002">) => {
       state.selectedCategory = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchRecipes.pending, (state) => {
+      state.RecipeState.status = "loading";
+    }),
+      builder.addCase(fetchRecipes.fulfilled, (state, action) => {
+        state.RecipeState.status = "succeeded";
+        state.recipeData = action.payload;
+      }),
+      builder.addCase(fetchRecipes.rejected, (state, action) => {
+        state.RecipeState.status = "failed";
+        state.RecipeState.error = action.error.message || null;
+      });
+  },
 });
 
-export const { setRecipeData } = recipesSlice.actions;
-
-export const { setSelectedCategory } = filterRecipesSlice.actions;
+export const { setRecipeData, setSelectedCategory } = recipesSlice.actions;
 
 const recipesReducer = recipesSlice.reducer;
-const filterRecipesReducer = filterRecipesSlice.reducer;
 
-export default { recipesReducer, filterRecipesReducer };
+export default recipesReducer;
