@@ -8,12 +8,14 @@ import { fetchRecipes } from "@/hooks/FetchRecipes";
 const MenuPage = () => {
   const dispatch = useAppDispatch();
   const recipeData = useAppSelector((state) => state.recipes.recipeData);
+  const searchValue = useAppSelector((state) => state.recipes.searchValue )
   const selectedCategory = useAppSelector(
     (state) => state.recipes.selectedCategory
   );
 
   const filterData = recipeData.filter(
-    (recipeData) => recipeData.UserType === selectedCategory
+    (recipeData) => recipeData.UserType === selectedCategory &&
+    recipeData.Name.toLowerCase().includes(searchValue.toLowerCase())
   );
 
   console.log(filterData);

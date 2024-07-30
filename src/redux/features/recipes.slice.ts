@@ -1,11 +1,12 @@
 import { fetchRecipes } from "@/hooks/FetchRecipes";
-import { Recipe, RecipeState } from "../../types/recipe.types";
+import { Recipe, RecipeState, SearchBox } from '../../types/recipe.types';
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: {
   recipeData: Recipe[];
   selectedCategory: string;
   RecipeState: RecipeState;
+  searchValue : string;
 } = {
   recipeData: [],
   selectedCategory: "001",
@@ -13,6 +14,7 @@ const initialState: {
     status: "idle",
     error: null,
   },
+  searchValue: ''
 };
 
 export const recipesSlice = createSlice({
@@ -25,6 +27,10 @@ export const recipesSlice = createSlice({
     setSelectedCategory: (state, action: PayloadAction<"001" | "002">) => {
       state.selectedCategory = action.payload;
     },
+
+    setSearchValue : (state, action : PayloadAction<string>) => {
+      state.searchValue = action.payload;
+    }
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRecipes.pending, (state) => {
@@ -41,7 +47,7 @@ export const recipesSlice = createSlice({
   },
 });
 
-export const { setRecipeData, setSelectedCategory } = recipesSlice.actions;
+export const { setRecipeData, setSelectedCategory,setSearchValue } = recipesSlice.actions;
 
 const recipesReducer = recipesSlice.reducer;
 
