@@ -8,17 +8,28 @@ import { fetchRecipes } from "@/hooks/FetchRecipes";
 const MenuPage = () => {
   const dispatch = useAppDispatch();
   const recipeData = useAppSelector((state) => state.recipes.recipeData);
-  const searchValue = useAppSelector((state) => state.recipes.searchValue )
+  const searchValue = useAppSelector((state) => state.recipes.searchValue);
   const selectedCategory = useAppSelector(
     (state) => state.recipes.selectedCategory
   );
 
-  const filterData = recipeData.filter(
-    (recipeData) => recipeData.UserType === selectedCategory &&
-    recipeData.Name.toLowerCase().includes(searchValue.toLowerCase())
-  );
+  const [debounceSearchValue, setDebounceSearchValue] = useState(searchValue);
 
-  console.log(filterData);
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      setDebounceSearchValue(searchValue);
+    }, 1000);
+    return () => {
+      clearTimeout(debounce);
+    };
+  },[searchValue]);
+  console.log(debounceSearchValue)
+  
+  const filterData = recipeData.filter(
+    (recipeData) =>
+      recipeData.UserType === selectedCategory &&
+      recipeData.Name.includes(debounceSearchValue)
+  );
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
