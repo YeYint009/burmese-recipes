@@ -1,9 +1,10 @@
 import { Recipe } from "../../types/recipe.types";
 import RecipeCard from "@/components/Card/RecipeCard";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PaginationComp from "@/components/pagination/PaginationComp";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchRecipes } from "@/hooks/FetchRecipes";
+import { Link } from "react-router-dom";
 
 const MenuPage = () => {
   const dispatch = useAppDispatch();
@@ -22,14 +23,20 @@ const MenuPage = () => {
     return () => {
       clearTimeout(debounce);
     };
-  },[searchValue]);
-  console.log(debounceSearchValue)
-  
-  const filterData = recipeData.filter(
-    (recipeData) =>
-      recipeData.UserType === selectedCategory &&
-      recipeData.Name.includes(debounceSearchValue)
+  }, [searchValue]);
+  console.log(debounceSearchValue);
+
+  const filterData = useMemo(
+    () =>
+      recipeData.filter(
+        (recipeData) =>
+          recipeData.UserType === selectedCategory &&
+          recipeData.Name.includes(debounceSearchValue)
+      ),
+    [recipeData, selectedCategory, debounceSearchValue]
   );
+
+  console.log(filterData)
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -54,7 +61,9 @@ const MenuPage = () => {
       <div className="container">
         <div className="grid grid-cols-3 gap-3">
           {currentItems.map((recipe: Recipe) => (
-            <RecipeCard recipe={recipe} key={recipe.Guid} />
+          <Link to={`/${recipe.Guid}`} key={recipe.Guid}>
+              <RecipeCard recipe={recipe}  />
+          </Link>
           ))}
         </div>
         <PaginationComp

@@ -2,6 +2,7 @@ import { Input } from "../ui/input";
 import Dropdown from "../dropdown/Dropdown";
 import { useAppDispatch } from "@/redux/hooks";
 import { setSearchValue } from "@/redux/features/recipes.slice";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +13,9 @@ const NavBar = () => {
   return (
     <div className="w-full h-20 bg-orange-500 flex z-50 rounded-b-sm fixed top-0">
       <div className=" container flex items-center italic font-bold text-3xl text-gray-900">
-        Burmese Recipe
+        <Link to='/'>
+          Burmese Recipe
+        </Link>
       </div>
       <div className="flex items-center mr-10 w-72 gap-1">
         <Dropdown />
