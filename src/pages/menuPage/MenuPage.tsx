@@ -36,7 +36,7 @@ const MenuPage = () => {
     [recipeData, selectedCategory, debounceSearchValue]
   );
 
-  console.log(filterData)
+  console.log(filterData);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -56,14 +56,23 @@ const MenuPage = () => {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
+  const handleToggleFav = (Guid: string) => {
+    const updateFav = recipeData.map((recipe) =>
+      recipe.Guid === Guid ? { ...recipe, fav: !recipe.fav } : recipe
+    );
+  };
+
   return (
     <div className="mt-24 ">
       <div className="container">
         <div className="grid grid-cols-3 gap-3">
           {currentItems.map((recipe: Recipe) => (
-          <Link to={`/${recipe.Guid}`} key={recipe.Guid}>
-              <RecipeCard recipe={recipe}  />
-          </Link>
+            <Link to={`/${recipe.Guid}`} key={recipe.Guid}>
+              <RecipeCard
+                recipe={recipe}
+                onToggleFav={() => handleToggleFav(recipe.Guid)}
+              />
+            </Link>
           ))}
         </div>
         <PaginationComp

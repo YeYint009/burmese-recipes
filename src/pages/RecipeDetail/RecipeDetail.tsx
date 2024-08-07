@@ -44,7 +44,7 @@ const RecipeDetail = () => {
               onError={(e) =>
                 ((e.target as HTMLImageElement).src = imgNotFound)
               }
-              className="object-cover aspect-square"
+              className="object-cover aspect-square "
             />
             <div>
               <h1 className="font-bold text-2xl underline">Ingredients</h1>

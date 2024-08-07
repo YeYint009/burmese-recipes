@@ -1,23 +1,35 @@
 import { Input } from "../ui/input";
 import Dropdown from "../dropdown/Dropdown";
-import { useAppDispatch } from "@/redux/hooks";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setSearchValue } from "@/redux/features/recipes.slice";
 import { Link } from "react-router-dom";
+import { Heart } from "lucide-react";
+import { useEffect, useState } from "react";
 
 const NavBar = () => {
   const dispatch = useAppDispatch();
+  const favRecipe = useAppSelector(state => state.recipes.savedFavCount)
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchValue(e.target.value));
   };
+  
+
   return (
     <div className="w-full h-20 bg-orange-500 flex z-50 rounded-b-sm fixed top-0">
       <div className=" container flex items-center italic font-bold text-3xl text-gray-900">
-        <Link to='/'>
-          Burmese Recipe
-        </Link>
+        <Link to="/">Burmese Recipe</Link>
       </div>
-      <div className="flex items-center mr-10 w-72 gap-1">
+
+      <div className="flex items-center mr-10 w-72 gap-3">
+        <Link to="/savedRecipe">
+          <div className="relative">
+            <Heart size={32} />
+            <span className=" absolute -top-2 -right-2 bg-black flex items-center w-5 h-5 justify-center text-white rounded-full">
+              {favRecipe}
+            </span>
+          </div>
+        </Link>
         <Dropdown />
         <Input
           type="text"

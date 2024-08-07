@@ -4,6 +4,7 @@ export interface Recipe {
   Ingredients: string;
   CookingInstructions: string;
   UserType: string;
+  fav: boolean;
 }
 
 export interface filterCategory {
@@ -31,5 +32,8 @@ export interface RootState {
     recipeData: Recipe[];
     filterRecipes: Recipe[];
     selectedCategory: "001" | "002";
+    addFavRecipe : number;
   };
 }
+
+

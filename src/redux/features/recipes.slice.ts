@@ -1,12 +1,13 @@
 import { fetchRecipes } from "@/hooks/FetchRecipes";
-import { Recipe, RecipeState, SearchBox } from '../../types/recipe.types';
+import { Recipe, RecipeState, SearchBox } from "../../types/recipe.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState: {
   recipeData: Recipe[];
   selectedCategory: string;
   RecipeState: RecipeState;
-  searchValue : string;
+  searchValue: string;
+  savedFavCount: number;
 } = {
   recipeData: [],
   selectedCategory: "001",
@@ -14,7 +15,8 @@ const initialState: {
     status: "idle",
     error: null,
   },
-  searchValue: ''
+  searchValue: "",
+  savedFavCount: 0,
 };
 
 export const recipesSlice = createSlice({
@@ -28,9 +30,36 @@ export const recipesSlice = createSlice({
       state.selectedCategory = action.payload;
     },
 
-    setSearchValue : (state, action : PayloadAction<string>) => {
+    setSearchValue: (state, action: PayloadAction<string>) => {
       state.searchValue = action.payload;
-    }
+    },
+
+    addFavRecipe: (state, action: PayloadAction<Recipe>) => {
+      state.recipeData.push(action.payload);
+      state.savedFavCount = state.recipeData.filter(
+        (recipe) => recipe.fav
+      ).length;
+      localStorage.setItem(
+        "favRecipes",
+        JSON.stringify(state.recipeData.filter((recipe) => recipe.fav))
+      );
+    },
+
+    toggleFav: (state, action: PayloadAction<string>) => {
+      const recipeFav = state.recipeData.findIndex(
+        (fav) => fav.Guid === action.payload
+      );
+      if (recipeFav !== -1) {
+        state.recipeData[recipeFav].fav = !state.recipeData[recipeFav].fav;
+        state.savedFavCount = state.recipeData.filter(
+          (recipe) => recipe.fav
+        ).length;
+        localStorage.setItem(
+          "favRecipes",
+          JSON.stringify(state.recipeData.filter((recipe) => recipe.fav))
+        );
+      }
+    },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchRecipes.pending, (state) => {
@@ -47,7 +76,13 @@ export const recipesSlice = createSlice({
   },
 });
 
-export const { setRecipeData, setSelectedCategory,setSearchValue } = recipesSlice.actions;
+export const {
+  setRecipeData,
+  setSelectedCategory,
+  setSearchValue,
+  addFavRecipe,
+  toggleFav,
+} = recipesSlice.actions;
 
 const recipesReducer = recipesSlice.reducer;
 

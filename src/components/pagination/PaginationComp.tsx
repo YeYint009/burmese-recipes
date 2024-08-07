@@ -36,7 +36,7 @@ const PaginationComp = ({
     };
 
   return (
-    <div className="mt-5">
+    <div className="mt-5 mb-12">
       <Pagination>
         <PaginationContent>
           <PaginationItem>
