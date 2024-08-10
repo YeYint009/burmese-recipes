@@ -26,13 +26,12 @@ const MenuPage = () => {
       clearTimeout(debounce);
     };
   }, [searchValue]);
-  console.log(debounceSearchValue);
 
   const filterData = useMemo(
     () =>
       recipeData.filter(
         (recipeData) =>
-          recipeData.UserType === selectedCategory &&
+          (selectedCategory === "000" || recipeData.UserType === selectedCategory || recipeData.UserType === "000") &&
           recipeData.Name.includes(debounceSearchValue)
       ),
     [recipeData, selectedCategory, debounceSearchValue]
@@ -63,7 +62,7 @@ const MenuPage = () => {
   return (
     <div className="mt-24 ">
       <div className="container">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3">
           {currentItems.map((recipe: Recipe) => (
             <Link to={`/${recipe.Guid}`} key={recipe.Guid}>
               <RecipeCard

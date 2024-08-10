@@ -25,9 +25,11 @@ const NavBar = () => {
         <Link to="/savedRecipe">
           <div className="relative">
             <Heart size={32} />
-            <span className=" absolute -top-2 -right-2 bg-black flex items-center w-5 h-5 justify-center text-white rounded-full">
-              {favRecipesCount}
-            </span>
+            {favRecipesCount > 0 && (
+              <span className=" absolute -top-2 -right-2 bg-black flex items-center w-5 h-5 justify-center text-white rounded-full">
+                {favRecipesCount}
+              </span>
+            )}
           </div>
         </Link>
         <Dropdown />

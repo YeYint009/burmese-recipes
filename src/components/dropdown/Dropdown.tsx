@@ -13,7 +13,7 @@ import { setSelectedCategory } from "@/redux/features/recipes.slice"
 const Dropdown = () => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const handleSelect = (UserType: '001' | '002' )  => {
+  const handleSelect = (UserType:"000" | '001' | '002' )  => {
     dispatch(setSelectedCategory(UserType));
   }
   
@@ -25,6 +25,9 @@ const Dropdown = () => {
           <Button className=" border-none">Filter</Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent>
+        <DropdownMenuItem onClick={() => {
+            handleSelect('000')
+          }}>အကုန်စား</DropdownMenuItem>
           <DropdownMenuItem onClick={() => {
             handleSelect('001')
           }}>အသားစား</DropdownMenuItem>
