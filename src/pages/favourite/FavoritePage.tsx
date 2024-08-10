@@ -19,7 +19,7 @@ const FavoritePage = () => {
 
   return (
     <div className="mt-24">
-        <div className=" w-12 px-10 mb-4">
+        <div className=" w-12 px-3 mb-4">
           <Button onClick={() => nav(-1)}>Back</Button>
         </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 md:gap-3 gap-2 ">

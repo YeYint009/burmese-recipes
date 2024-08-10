@@ -40,7 +40,7 @@ const RecipeDetail = () => {
               onError={(e) =>
                 ((e.target as HTMLImageElement).src = imgNotFound)
               }
-              className="object-cover w-full h-[500px] mb-2 object-center rounded-md"
+              className="object-cover aspect-square w-full mb-2 object-center rounded-md"
             />
             <div className="flex flex-col">
               <h1 className="font-bold text-3xl underline mb-4 whitespace-nowrap">

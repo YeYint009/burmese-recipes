@@ -60,9 +60,9 @@ const MenuPage = () => {
   };
 
   return (
-    <div className="mt-24 ">
-      <div className="container">
-        <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3">
+    <div className="mt-24">
+      <div className="container mx-6 md:mx-32">
+        <div className="grid grid-cols-1 lg:grid-cols-4 md:grid-cols-3 gap-3">
           {currentItems.map((recipe: Recipe) => (
             <Link to={`/${recipe.Guid}`} key={recipe.Guid}>
               <RecipeCard

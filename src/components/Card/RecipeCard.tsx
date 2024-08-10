@@ -37,7 +37,7 @@ const RecipeCard = ({ isFav, recipe, onToggleFav }: RecipeCardProps) => {
 
   return (
     <section>
-      <Card className="md:w-[90%] md:h-[90%] w-[90%] h-[80%] hover:bg-orange-100 duration-300 mx-auto shadow-xl overflow-hidden border">
+      <Card className="md:w-[90%] md:h-[90%] w-[90%] h-[80%] hover:bg-orange-100 duration-300 shadow-xl overflow-hidden border">
         <CardHeader>
           <CardContent className="flex flex-col justify-center underline">
             <div className="relative">
@@ -46,7 +46,7 @@ const RecipeCard = ({ isFav, recipe, onToggleFav }: RecipeCardProps) => {
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = imgNotFound;
                 }}
-                className=" object-cover aspect-square w-full md:h-[200px] h-[100px] mb-2 object-center rounded-md"
+                className=" object-cover aspect-square w-full mb-2 object-center rounded-md"
               />
               <Heart
                 size={24}
