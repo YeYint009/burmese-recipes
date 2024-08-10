@@ -34,7 +34,7 @@ const FavoritePage = () => {
             </Link>
           ))
         ) : (
-          <div className=" h-screen w-full flex justify-center items-center">
+          <div className="md:h-[500px] h-[450px] w-screen flex justify-center items-center">
             No Favorite Recipe
           </div>
         )}
