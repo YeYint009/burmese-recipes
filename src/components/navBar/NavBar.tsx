@@ -7,12 +7,13 @@ import { Heart } from "lucide-react";
 
 const NavBar = () => {
   const dispatch = useAppDispatch();
-  const favRecipe = useAppSelector(state => state.recipes.savedFavCount)
+  const favRecipes = useAppSelector((state) => state.recipes.favRecipes);
+
+  const favRecipesCount = Object.values(favRecipes).length;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(setSearchValue(e.target.value));
   };
-  
 
   return (
     <div className="w-full h-20 bg-orange-500 flex z-50 rounded-b-sm fixed top-0">
@@ -24,9 +25,11 @@ const NavBar = () => {
         <Link to="/savedRecipe">
           <div className="relative">
             <Heart size={32} />
-            <span className=" absolute -top-2 -right-2 bg-black flex items-center w-5 h-5 justify-center text-white rounded-full">
-              {favRecipe}
-            </span>
+            {favRecipesCount > 0 && (
+              <span className=" absolute -top-2 -right-2 bg-black flex items-center w-5 h-5 justify-center text-white rounded-full">
+                {favRecipesCount}
+              </span>
+            )}
           </div>
         </Link>
         <Dropdown />

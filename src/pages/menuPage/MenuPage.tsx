@@ -10,6 +10,7 @@ import { toggleFav } from "@/redux/features/recipes.slice";
 const MenuPage = () => {
   const dispatch = useAppDispatch();
   const recipeData = useAppSelector((state) => state.recipes.recipeData);
+  const favRecipes = useAppSelector((state) => state.recipes.favRecipes);
   const searchValue = useAppSelector((state) => state.recipes.searchValue);
   const selectedCategory = useAppSelector(
     (state) => state.recipes.selectedCategory
@@ -25,18 +26,16 @@ const MenuPage = () => {
       clearTimeout(debounce);
     };
   }, [searchValue]);
-  console.log(debounceSearchValue);
 
   const filterData = useMemo(
     () =>
       recipeData.filter(
         (recipeData) =>
-          recipeData.UserType === selectedCategory &&
+          (selectedCategory === "000" || recipeData.UserType === selectedCategory || recipeData.UserType === "000") &&
           recipeData.Name.includes(debounceSearchValue)
       ),
     [recipeData, selectedCategory, debounceSearchValue]
   );
-
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -56,19 +55,20 @@ const MenuPage = () => {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
-  const handleToggleFav = (Guid : string) => {
-    dispatch(toggleFav(Guid))
-  }
+  const handleToggleFav = (recipe: Recipe) => {
+    dispatch(toggleFav(recipe));
+  };
 
   return (
     <div className="mt-24 ">
       <div className="container">
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-2 lg:grid-cols-4 md:grid-cols-3 gap-3">
           {currentItems.map((recipe: Recipe) => (
             <Link to={`/${recipe.Guid}`} key={recipe.Guid}>
               <RecipeCard
+                isFav={Boolean(favRecipes[recipe.Guid])}
                 recipe={recipe}
-                onToggleFav={() => handleToggleFav(recipe.Guid)}
+                onToggleFav={() => handleToggleFav(recipe)}
               />
             </Link>
           ))}

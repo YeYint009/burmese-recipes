@@ -2,37 +2,42 @@ import { Recipe } from "@/types/recipe.types";
 import imgNotFound from "../../imgNotFound/imgNotFound.jpg";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Heart } from "lucide-react";
+import Swal from "sweetalert2";
 
 interface RecipeCardProps {
   recipe: Recipe;
-  onToggleFav: (Guid: string) => void;
+  isFav: boolean;
+  onToggleFav: (recipe: Recipe) => void;
 }
 
-const RecipeCard = ({ recipe, onToggleFav }: RecipeCardProps) => {
-
-  const handleToggle = (e: React.MouseEvent, Guid: string) => {
+const RecipeCard = ({ isFav, recipe, onToggleFav }: RecipeCardProps) => {
+  const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onToggleFav(Guid);
+    
+    Swal.fire({
+      title: isFav? "Remove from Favorites" : "Add to Favorite",
+      text: isFav? "it is gonna remove from fav" : "Added to Favorite",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: isFav?"Yes, Remove it!": "Yes,add it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onToggleFav(recipe);
+        Swal.fire(
+          isFav ? "Removed" : "Added!",
+          isFav ? 'The Recipe is Removed' : "The Recipe is Added"
+        );
+      }
+    });
 
-    const savedFavRecipes = JSON.parse(
-      localStorage.getItem("favRecipes") || "{}"
-    );
-    if (savedFavRecipes[Guid]) {
-      delete savedFavRecipes[Guid];
-    } else {
-      savedFavRecipes[Guid] = { ...recipe, fav: true };
-    }
-    localStorage.setItem("favRecipes", JSON.stringify(savedFavRecipes));
   };
-
-  const isFav =
-    recipe.fav ||
-    !!JSON.parse(localStorage.getItem("favRecipes") || "{}")[recipe.Guid];
 
   return (
     <section>
-      <Card className="w-[90%] h-[90%] mx-auto shadow-xl overflow-hidden border">
+      <Card className="md:w-[90%] md:h-[90%] w-[90%] h-[80%] hover:bg-orange-100 duration-300 mx-auto shadow-xl overflow-hidden border">
         <CardHeader>
           <CardContent className="flex flex-col justify-center underline">
             <div className="relative">
@@ -41,7 +46,7 @@ const RecipeCard = ({ recipe, onToggleFav }: RecipeCardProps) => {
                 onError={(e) => {
                   (e.target as HTMLImageElement).src = imgNotFound;
                 }}
-                className=" object-cover w-full h-[200px] mb-2 object-center rounded-md"
+                className=" object-cover aspect-square w-full md:h-[200px] h-[100px] mb-2 object-center rounded-md"
               />
               <Heart
                 size={24}
@@ -54,7 +59,7 @@ const RecipeCard = ({ recipe, onToggleFav }: RecipeCardProps) => {
                   color: isFav ? "red" : "orange",
                   transition: "all 0.3s ease",
                 }}
-                onClick={(e) => handleToggle(e, recipe.Guid)}
+                onClick={handleToggle}
               />
             </div>
             <CardTitle className="leading-7 whitespace-pre overflow-ellipsis overflow-hidden">

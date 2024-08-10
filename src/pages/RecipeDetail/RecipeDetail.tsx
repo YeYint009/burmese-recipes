@@ -26,33 +26,30 @@ const RecipeDetail = () => {
   return (
     <div>
       {loading || recipeState.status === "loading" ? (
-        <div className="h-screen flex justify-center items-center">
+        <div className="h-screen flex justify-center items-center animate-spin">
           <Loader />
         </div>
       ) : (
-        
-        <div className=" container h-screen flex flex-col p-10">
-            <div className="mt-12">
+        <div className=" container min-h-screen flex flex-col p-10">
+          <div className="mt-12">
             <Button onClick={() => nav(-1)}>Back</Button>
-            </div>
-          <div className="w-auto flex flex-col p-10 ">
-            <h1 className="font-bold text-3xl underline mb-4">
-              {recipeAll?.Name}
-            </h1>
+          </div>
+          <div className="h-full md:flex p-10 gap-3">
             <img
               src={`/${recipeAll?.Name}.jpg`}
               onError={(e) =>
                 ((e.target as HTMLImageElement).src = imgNotFound)
               }
-              className="object-cover aspect-square "
+              className="object-cover w-full h-[500px] mb-2 object-center rounded-md"
             />
-            <div>
+            <div className="flex flex-col">
+              <h1 className="font-bold text-3xl underline mb-4 whitespace-nowrap">
+                {recipeAll?.Name}
+              </h1>
               <h1 className="font-bold text-2xl underline">Ingredients</h1>
               <pre className="leading-6">{recipeAll?.Ingredients}</pre>
-            </div>
-            <div>
               <h2 className="mt-2 mb-2 underline text-2xl">ချက်ပြုတ်နည်း</h2>
-              <p className="text-neutral-500 mb-12">
+              <p className="text-neutral-500">
                 {recipeAll?.CookingInstructions}
               </p>
             </div>
