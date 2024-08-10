@@ -2,6 +2,8 @@ import { fetchRecipes } from "@/hooks/FetchRecipes";
 import { Recipe, RecipeState, SearchBox } from "../../types/recipe.types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const savedFavRecipes = JSON.parse(localStorage.getItem('favRecipes')|| "{}")
+
 const initialState: {
   recipeData: Recipe[];
   selectedCategory: string;
@@ -16,7 +18,7 @@ const initialState: {
     error: null,
   },
   searchValue: "",
-  savedFavCount: 0,
+  savedFavCount: Object.values(savedFavRecipes).length,
 };
 
 export const recipesSlice = createSlice({
@@ -34,16 +36,7 @@ export const recipesSlice = createSlice({
       state.searchValue = action.payload;
     },
 
-    addFavRecipe: (state, action: PayloadAction<Recipe>) => {
-      state.recipeData.push(action.payload);
-      state.savedFavCount = state.recipeData.filter(
-        (recipe) => recipe.fav
-      ).length;
-      localStorage.setItem(
-        "favRecipes",
-        JSON.stringify(state.recipeData.filter((recipe) => recipe.fav))
-      );
-    },
+
 
     toggleFav: (state, action: PayloadAction<string>) => {
       const recipeFav = state.recipeData.findIndex(
@@ -54,10 +47,8 @@ export const recipesSlice = createSlice({
         state.savedFavCount = state.recipeData.filter(
           (recipe) => recipe.fav
         ).length;
-        localStorage.setItem(
-          "favRecipes",
-          JSON.stringify(state.recipeData.filter((recipe) => recipe.fav))
-        );
+        const savedFavRecipe = state.recipeData.filter((recipe) => recipe.fav);
+        localStorage.setItem("favRecipes", JSON.stringify(savedFavRecipe));
       }
     },
   },
@@ -80,7 +71,6 @@ export const {
   setRecipeData,
   setSelectedCategory,
   setSearchValue,
-  addFavRecipe,
   toggleFav,
 } = recipesSlice.actions;
 

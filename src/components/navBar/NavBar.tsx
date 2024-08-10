@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { setSearchValue } from "@/redux/features/recipes.slice";
 import { Link } from "react-router-dom";
 import { Heart } from "lucide-react";
-import { useEffect, useState } from "react";
 
 const NavBar = () => {
   const dispatch = useAppDispatch();

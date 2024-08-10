@@ -1,10 +1,7 @@
 import { Recipe } from "@/types/recipe.types";
 import imgNotFound from "../../imgNotFound/imgNotFound.jpg";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { toggleFav } from "@/redux/features/recipes.slice";
 import { Heart } from "lucide-react";
-import { useEffect, useState } from "react";
 
 interface RecipeCardProps {
   recipe: Recipe;
@@ -12,29 +9,26 @@ interface RecipeCardProps {
 }
 
 const RecipeCard = ({ recipe, onToggleFav }: RecipeCardProps) => {
-  const dispatch = useAppDispatch();
-  const favState = useAppSelector((state) => state.recipes.recipeData);
-  const [isFav, setIsFav] = useState(false);
 
   const handleToggle = (e: React.MouseEvent, Guid: string) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(toggleFav(Guid));
     onToggleFav(Guid);
+
+    const savedFavRecipes = JSON.parse(
+      localStorage.getItem("favRecipes") || "{}"
+    );
+    if (savedFavRecipes[Guid]) {
+      delete savedFavRecipes[Guid];
+    } else {
+      savedFavRecipes[Guid] = { ...recipe, fav: true };
+    }
+    localStorage.setItem("favRecipes", JSON.stringify(savedFavRecipes));
   };
 
-  useEffect(() => {
-    const favRecipe = favState.find(
-      (favRecipe) => favRecipe.Guid === recipe.Guid
-    );
-    const savedFavRecipes = JSON.parse(
-      localStorage.getItem("favRecipes") || "[]"
-    );
-    const isRed = savedFavRecipes.some(
-      (favRecipe: Recipe) => favRecipe.Guid === recipe.Guid
-    );
-    setIsFav(favRecipe ? favRecipe.fav : isRed);
-  }, [favState, recipe.Guid]);
+  const isFav =
+    recipe.fav ||
+    !!JSON.parse(localStorage.getItem("favRecipes") || "{}")[recipe.Guid];
 
   return (
     <section>

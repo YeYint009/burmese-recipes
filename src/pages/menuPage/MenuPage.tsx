@@ -5,6 +5,7 @@ import PaginationComp from "@/components/pagination/PaginationComp";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { fetchRecipes } from "@/hooks/FetchRecipes";
 import { Link } from "react-router-dom";
+import { toggleFav } from "@/redux/features/recipes.slice";
 
 const MenuPage = () => {
   const dispatch = useAppDispatch();
@@ -36,7 +37,6 @@ const MenuPage = () => {
     [recipeData, selectedCategory, debounceSearchValue]
   );
 
-  console.log(filterData);
 
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
@@ -56,11 +56,9 @@ const MenuPage = () => {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
-  const handleToggleFav = (Guid: string) => {
-    const updateFav = recipeData.map((recipe) =>
-      recipe.Guid === Guid ? { ...recipe, fav: !recipe.fav } : recipe
-    );
-  };
+  const handleToggleFav = (Guid : string) => {
+    dispatch(toggleFav(Guid))
+  }
 
   return (
     <div className="mt-24 ">
