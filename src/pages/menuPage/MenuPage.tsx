@@ -10,6 +10,7 @@ import { toggleFav } from "@/redux/features/recipes.slice";
 const MenuPage = () => {
   const dispatch = useAppDispatch();
   const recipeData = useAppSelector((state) => state.recipes.recipeData);
+  const favRecipes = useAppSelector((state) => state.recipes.favRecipes);
   const searchValue = useAppSelector((state) => state.recipes.searchValue);
   const selectedCategory = useAppSelector(
     (state) => state.recipes.selectedCategory
@@ -37,7 +38,6 @@ const MenuPage = () => {
     [recipeData, selectedCategory, debounceSearchValue]
   );
 
-
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 12;
 
@@ -56,9 +56,9 @@ const MenuPage = () => {
     dispatch(fetchRecipes());
   }, [dispatch]);
 
-  const handleToggleFav = (Guid : string) => {
-    dispatch(toggleFav(Guid))
-  }
+  const handleToggleFav = (recipe: Recipe) => {
+    dispatch(toggleFav(recipe));
+  };
 
   return (
     <div className="mt-24 ">
@@ -67,8 +67,9 @@ const MenuPage = () => {
           {currentItems.map((recipe: Recipe) => (
             <Link to={`/${recipe.Guid}`} key={recipe.Guid}>
               <RecipeCard
+                isFav={Boolean(favRecipes[recipe.Guid])}
                 recipe={recipe}
-                onToggleFav={() => handleToggleFav(recipe.Guid)}
+                onToggleFav={() => handleToggleFav(recipe)}
               />
             </Link>
           ))}

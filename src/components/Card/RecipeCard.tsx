@@ -5,30 +5,32 @@ import { Heart } from "lucide-react";
 
 interface RecipeCardProps {
   recipe: Recipe;
-  onToggleFav: (Guid: string) => void;
+  isFav: boolean;
+  onToggleFav: (recipe: Recipe) => void;
 }
 
-const RecipeCard = ({ recipe, onToggleFav }: RecipeCardProps) => {
-
-  const handleToggle = (e: React.MouseEvent, Guid: string) => {
+const RecipeCard = ({ isFav, recipe, onToggleFav }: RecipeCardProps) => {
+  const handleToggle = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    onToggleFav(Guid);
+    onToggleFav(recipe);
 
-    const savedFavRecipes = JSON.parse(
-      localStorage.getItem("favRecipes") || "{}"
-    );
-    if (savedFavRecipes[Guid]) {
-      delete savedFavRecipes[Guid];
-    } else {
-      savedFavRecipes[Guid] = { ...recipe, fav: true };
-    }
-    localStorage.setItem("favRecipes", JSON.stringify(savedFavRecipes));
+    // const savedFavRecipes = JSON.parse(
+    //   localStorage.getItem("favRecipes") || "{}"
+    // );
+    // if (savedFavRecipes[Guid]) {
+    //   delete savedFavRecipes[Guid];
+    // } else {
+    //   savedFavRecipes[Guid] = { ...recipe, fav: true };
+    // }
+    // localStorage.setItem("favRecipes", JSON.stringify(savedFavRecipes));
   };
 
-  const isFav =
-    recipe.fav ||
-    !!JSON.parse(localStorage.getItem("favRecipes") || "{}")[recipe.Guid];
+  // const isFav =
+  //   recipe.fav ||
+  //   !!JSON.parse(localStorage.getItem("favRecipes") || "[]").find(
+  //     (favRecipe) => favRecipe.Guid === recipe.Guid
+  //   );
 
   return (
     <section>
@@ -54,7 +56,7 @@ const RecipeCard = ({ recipe, onToggleFav }: RecipeCardProps) => {
                   color: isFav ? "red" : "orange",
                   transition: "all 0.3s ease",
                 }}
-                onClick={(e) => handleToggle(e, recipe.Guid)}
+                onClick={handleToggle}
               />
             </div>
             <CardTitle className="leading-7 whitespace-pre overflow-ellipsis overflow-hidden">
