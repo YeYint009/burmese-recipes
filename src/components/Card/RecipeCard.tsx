@@ -37,7 +37,7 @@ const RecipeCard = ({ isFav, recipe, onToggleFav }: RecipeCardProps) => {
 
   return (
     <section>
-      <Card className="md:w-[90%] md:h-[90%] w-[90%] h-[80%] hover:bg-orange-100 duration-300 shadow-xl overflow-hidden border">
+      <Card className="md:w-full md:h-[90%] w-full h-[80%] hover:bg-orange-100 duration-300 shadow-xl overflow-hidden border">
         <CardHeader>
           <CardContent className="flex flex-col justify-center underline">
             <div className="relative">
